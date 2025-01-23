@@ -66,19 +66,17 @@ jobs:
 
     - name: Generate Checksums
       run: |
-        # for sha256sum
-        brew install coreutils
         echo "# Release ${{ github.ref_name }}" > CHECKSUMS.md
         echo "" >> CHECKSUMS.md
         echo "## SHA256 Checksums" >> CHECKSUMS.md
         echo "| File | SHA256 Checksum |" >> CHECKSUMS.md
         echo "|------|----------------|" >> CHECKSUMS.md
-        #mkdir dist_electron
-        find dist_electron -type f -exec sh -c '
+        find dist_electron -type f -name \*.AppImage -o -name \*.dmg -o -name \*.exe -exec sh -c '
           for file; do
             echo "| $(basename "$file") | \`$(sha256sum "$file" | cut -d " " -f1)\` |" >> CHECKSUMS.md
           done
         ' sh {} +
+
 
 
     - name: Create Release v2
