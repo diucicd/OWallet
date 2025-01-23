@@ -17,12 +17,6 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
-    permissions: # Add this permissions block
-      contents: write
-      packages: write
-      issues: write
-      pull-requests: write
-
     steps:
     # Check out the code
     - name: Checkout code
