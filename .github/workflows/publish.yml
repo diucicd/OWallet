@@ -9,11 +9,13 @@ jobs:
   build-and-release:
     runs-on: macos-latest
 
-    permissions: # Add this permissions block
-      contents: write
-      packages: write
-      issues: write
-      pull-requests: write
+    # permissions: # Add this permissions block
+    #   contents: write
+    #   packages: write
+    #   issues: write
+    #   pull-requests: write
+
+    permissions: write-all
 
     steps:
     # Check out the code
@@ -32,21 +34,21 @@ jobs:
       run: |
         yarn install
 
-    # Build all packages (macOS, Linux, and Windows)
-    - name: Build macos packages
-      run: |
-        yarn build:mac
+    # # Build all packages (macOS, Linux, and Windows)
+    # - name: Build macos packages
+    #   run: |
+    #     yarn build:mac
 
-    # Build all packages (macOS, Linux, and Windows)
-    - name: Build Windows App
-      # if: matrix.os == 'windows-latest'
-      run: |
-        yarn build:win
+    # # Build all packages (macOS, Linux, and Windows)
+    # - name: Build Windows App
+    #   # if: matrix.os == 'windows-latest'
+    #   run: |
+    #     yarn build:win
 
-    - name: Build Linux App
-      # if: matrix.os == 'ubuntu-latest'
-      run: |
-        yarn build:linux
+    # - name: Build Linux App
+    #   # if: matrix.os == 'ubuntu-latest'
+    #   run: |
+    #     yarn build:linux
 
     - name: Create Release
       id: create_release
