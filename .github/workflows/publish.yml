@@ -6,7 +6,7 @@ on:
       - '*' # Listen for any tag push events
 
 jobs:
-  build-and-release:
+  build:
     runs-on: ${{ matrix.os }}
     permissions: # Add this permissions block
       contents: write
@@ -55,26 +55,34 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create Release
-      id: create_release
-      if: matrix.os == 'ubuntu-latest'
-      uses: actions/create-release@latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: |
-          Change Log
-          - TODO
-        draft: false
-        prerelease: false
 
-    - name: Release with attachment
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: |
-          dist_electron/*.dmg
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+  release:
+    needs: build  # Wait for build job to complete
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Change Log
+            - TODO
+          draft: false
+          prerelease: false
+
+      - name: Release with attachment
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            dist_electron/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
