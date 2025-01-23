@@ -31,13 +31,13 @@ jobs:
       run: |
         yarn build:mac
 
-    - name: Upload Release Assets
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        files: dist_electron/**
-        tag_name: ${{ github.ref }}        
+    # - name: Upload Release Assets
+    #   uses: softprops/action-gh-release@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     files: dist_electron/**
+    #     tag_name: ${{ github.ref }}        
 
         # Upload all generated artifacts
         # - name: Upload artifacts
