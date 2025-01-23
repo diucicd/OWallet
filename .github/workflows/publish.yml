@@ -35,20 +35,20 @@ jobs:
         yarn install
 
     # # Build all packages (macOS, Linux, and Windows)
-    # - name: Build macos packages
-    #   run: |
-    #     yarn build:mac
+    - name: Build macos packages
+      run: |
+        yarn build:mac
 
     # # Build all packages (macOS, Linux, and Windows)
-    # - name: Build Windows App
-    #   # if: matrix.os == 'windows-latest'
-    #   run: |
-    #     yarn build:win
+    - name: Build Windows App
+      # if: matrix.os == 'windows-latest'
+      run: |
+        yarn build:win
 
-    # - name: Build Linux App
-    #   # if: matrix.os == 'ubuntu-latest'
-    #   run: |
-    #     yarn build:linux
+    - name: Build Linux App
+      # if: matrix.os == 'ubuntu-latest'
+      run: |
+        yarn build:linux
 
     # - name: Create Release v1
     #   id: create_release
@@ -71,7 +71,7 @@ jobs:
         echo "## SHA256 Checksums" >> CHECKSUMS.md
         echo "| File | SHA256 Checksum |" >> CHECKSUMS.md
         echo "|------|----------------|" >> CHECKSUMS.md
-        mkdir dist_electron
+        #mkdir dist_electron
         find dist_electron -type f -exec sh -c '
           for file; do
             echo "| $(basename "$file") | \`$(sha256sum "$file" | cut -d " " -f1)\` |" >> CHECKSUMS.md
