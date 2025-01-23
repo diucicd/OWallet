@@ -7,15 +7,15 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
     permissions: # Add this permissions block
       contents: write
       packages: write
       issues: write
       pull-requests: write
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+    # strategy:
+    #   matrix:
+    #     os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
     # Check out the code
@@ -37,20 +37,20 @@ jobs:
 
     # Build all packages (macOS, Linux, and Windows)
     - name: Build Windows App
-      if: matrix.os == 'windows-latest'
+      # if: matrix.os == 'windows-latest'
       run: yarn build:win
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build macos packages
-      if: matrix.os == 'macos-latest'
+      # if: matrix.os == 'macos-latest'
       run: |
         yarn build:mac
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Linux App
-      if: matrix.os == 'ubuntu-latest'
+      # if: matrix.os == 'ubuntu-latest'
       run: yarn build:linux
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
