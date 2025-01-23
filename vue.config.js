@@ -4,6 +4,9 @@ module.exports = {
       nodeIntegration: true,
       externals: ['node-hid', 'usb', 'nedb'],
       builderOptions: {
+        electronPublish:{
+          publishPolicy: 'never',
+        },
         productName: process.env.VUE_APP_TITLE,
         appId: 'org.ont.wallet',
         nsis: {
