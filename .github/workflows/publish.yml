@@ -36,22 +36,27 @@ jobs:
       run: |
         yarn build:mac
 
+
+
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
+      uses: actions/create-release@latest
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
+        body: |
+          Change Log
+          - TODO
         draft: false
         prerelease: false
 
-    # Upload release assets
-    - name: Upload Release Assets
+    - name: Release with attachment
       uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
           dist_electron/*.dmg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
