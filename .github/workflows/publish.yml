@@ -66,6 +66,8 @@ jobs:
 
     - name: Generate Checksums
       run: |
+        # for sha256sum
+        brew install coreutils
         echo "# Release ${{ github.ref_name }}" > CHECKSUMS.md
         echo "" >> CHECKSUMS.md
         echo "## SHA256 Checksums" >> CHECKSUMS.md
