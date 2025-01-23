@@ -31,17 +31,25 @@ jobs:
       run: |
         yarn build:mac
 
-    # Upload all generated artifacts
-    # - name: Upload artifacts
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: all-builds
-    #     path: |
-    #       dist_electron/*.dmg
-    #       dist_electron/*.AppImage
-    #       dist_electron/*.exe
+    - name: Upload Release Assets
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        files: dist_electron/**
+        tag_name: ${{ github.ref }}        
 
-    # # Create a GitHub Release
+        # Upload all generated artifacts
+        # - name: Upload artifacts
+        #   uses: actions/upload-artifact@v3
+        #   with:
+        #     name: all-builds
+        #     path: |
+        #       dist_electron/*.dmg
+        #       #dist_electron/*.AppImage
+        #       #dist_electron/*.exe
+
+    # Create a GitHub Release
     # - name: Create Release
     #   uses: actions/create-release@v1
     #   env:
