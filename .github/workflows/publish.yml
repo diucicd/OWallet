@@ -29,7 +29,7 @@ jobs:
     # Build all packages (macOS, Linux, and Windows)
     - name: Build packages
       run: |
-        yarn build
+        yarn build:mac
 
     # Upload all generated artifacts
     # - name: Upload artifacts
