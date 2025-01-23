@@ -33,19 +33,20 @@ jobs:
         yarn install
 
     # Build all packages (macOS, Linux, and Windows)
-    - name: Build packages
+    - name: Build macos packages
       run: |
         yarn build:mac
 
     # Build all packages (macOS, Linux, and Windows)
     - name: Build Windows App
       # if: matrix.os == 'windows-latest'
-      run: yarn build:win
-
+      run: |
+        yarn build:win
 
     - name: Build Linux App
       # if: matrix.os == 'ubuntu-latest'
-      run: yarn build:linux
+      run: |
+        yarn build:linux
 
     - name: Create Release
       id: create_release
