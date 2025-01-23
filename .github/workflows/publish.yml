@@ -31,9 +31,22 @@ jobs:
     - name: Install dependencies
       run: |
         yarn install
-
+    # 
     # Build all packages (macOS, Linux, and Windows)
-    - name: Build packages
+    - name: Build Windows App
+      # if: matrix.os == 'windows-latest'
+      run: yarn build:win
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+    - name: Build Linux App
+      # if: matrix.os == 'ubuntu-latest'
+      run: yarn build:linux
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # Build all packages (macOS, Linux, and Windows)
+    - name: Build macos packages
       run: |
         yarn build:mac
 
