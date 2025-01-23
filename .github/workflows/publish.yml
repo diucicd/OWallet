@@ -50,25 +50,48 @@ jobs:
     #   run: |
     #     yarn build:linux
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: |
-          Change Log
-          - TODO
-        draft: false
-        prerelease: false
+    # - name: Create Release v1
+    #   id: create_release
+    #   uses: actions/create-release@latest
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+    #   with:
+    #     tag_name: ${{ github.ref }}
+    #     release_name: Release ${{ github.ref }}
+    #     body: |
+    #       Change Log
+    #       - TODO
+    #     draft: false
+    #     prerelease: false
 
-    - name: Release with attachment
+    - name: Generate Checksums
+      run: |
+        echo "# Release ${{ github.ref_name }}" > CHECKSUMS.md
+        echo "" >> CHECKSUMS.md
+        echo "## SHA256 Checksums" >> CHECKSUMS.md
+        echo "| File | SHA256 Checksum |" >> CHECKSUMS.md
+        echo "|------|----------------|" >> CHECKSUMS.md
+        find dist_electron -type f -exec sh -c '
+          for file; do
+            echo "| $(basename "$file") | \`$(sha256sum "$file" | cut -d " " -f1)\` |" >> CHECKSUMS.md
+          done
+        ' sh {} +
+
+
+    - name: Create Release v2
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
       with:
+        name: Release ${{ github.ref_name }}
+        body_path: CHECKSUMS.md
         files: |
           dist_electron/*.*
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            
+    # - name: Release with attachment
+    #   uses: softprops/action-gh-release@v1
+    #   if: startsWith(github.ref, 'refs/tags/')
+    #   with:
+    #     files: |
+    #       dist_electron/*.*
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
