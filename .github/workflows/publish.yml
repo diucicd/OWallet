@@ -24,6 +24,8 @@ jobs:
     # Install dependencies
     - name: Install dependencies
       run: |
+        yarn add -g electron-builder
+        yarn add --save-dev dmg-license
         yarn install
 
     # Build all packages (macOS, Linux, and Windows)
