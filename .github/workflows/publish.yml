@@ -33,23 +33,35 @@ jobs:
         yarn install
     # 
     # Build all packages (macOS, Linux, and Windows)
-    - name: Build Windows App
-      # if: matrix.os == 'windows-latest'
-      run: yarn build:win
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Build Windows App
+    #   # if: matrix.os == 'windows-latest'
+    #   run: yarn build:win
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - name: Build Linux App
-      # if: matrix.os == 'ubuntu-latest'
-      run: yarn build:linux
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Build Linux App
+    #   # if: matrix.os == 'ubuntu-latest'
+    #   run: yarn build:linux
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     # Build all packages (macOS, Linux, and Windows)
     - name: Build macos packages
       run: |
         yarn build:mac
 
+    # - name: Generate Checksums
+    #   run: |
+    #     echo "# Release ${{ github.ref_name }}" > CHECKSUMS.md
+    #     echo "" >> CHECKSUMS.md
+    #     echo "## SHA256 Checksums" >> CHECKSUMS.md
+    #     echo "| File | SHA256 Checksum |" >> CHECKSUMS.md
+    #     echo "|------|----------------|" >> CHECKSUMS.md
+    #     find dist_electron -type f -exec sh -c '
+    #       for file; do
+    #         echo "| $(basename "$file") | \`$(sha256sum "$file" | cut -d " " -f1)\` |" >> CHECKSUMS.md
+    #       done
+    #     ' sh {} +
 
 
     - name: Create Release
@@ -63,6 +75,7 @@ jobs:
         body: |
           Change Log
           - TODO
+        # body_path: CHECKSUMS.md
         draft: false
         prerelease: false
 
