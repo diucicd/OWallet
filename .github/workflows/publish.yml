@@ -67,16 +67,20 @@ jobs:
     - name: Generate Checksums
       run: |
         brew install coreutils
-        echo "# Release ${{ github.ref_name }}" > CHECKSUMS.md
-        echo "" >> CHECKSUMS.md
+        #echo "# Release ${{ github.ref_name }}" > CHECKSUMS.md
+        echo "" > CHECKSUMS.md
         echo "## SHA256 Checksums" >> CHECKSUMS.md
         echo "| File | SHA256 Checksum |" >> CHECKSUMS.md
         echo "|------|----------------|" >> CHECKSUMS.md
-        find dist_electron/ -type f -name OWallet\*.AppImage -o -name OWallet\*.dmg -o -name OWallet\*.exe -o -name OWallet\*.deb -exec sh -c '
-          for file; do
-            echo "| $(basename "$file") | \`$(sha256sum "$file" | cut -d " " -f1)\` |" >> CHECKSUMS.md
-          done
-        ' sh {} +
+        # find dist_electron/ -type f -name OWallet\*.AppImage -o -name OWallet\*.dmg -o -name OWallet\*.exe -o -name OWallet\*.deb -exec sh -c '
+        #   for file; do
+        #     echo "| $(basename "$file") | \`$(sha256sum "$file" | cut -d " " -f1)\` |" >> CHECKSUMS.md
+        #   done
+        # ' sh {} +
+        echo "| $(ls dist_electron/OWallet-*.deb) | \`$(sha256sum "dist_electron/OWallet-*.deb" | cut -d " " -f1)\` |" >> CHECKSUMS.md
+        echo "| $(ls dist_electron/OWallet-*.exe) | \`$(sha256sum "dist_electron/OWallet-*.exe" | cut -d " " -f1)\` |" >> CHECKSUMS.md
+        echo "| $(ls dist_electron/OWallet-*.AppImage) | \`$(sha256sum "dist_electron/OWallet-*.AppImage" | cut -d " " -f1)\` |" >> CHECKSUMS.md
+        echo "| $(ls dist_electron/OWallet-*.dmg) | \`$(sha256sum "dist_electron/OWallet-*.dmg" | cut -d " " -f1)\` |" >> CHECKSUMS.md
 
 
 
