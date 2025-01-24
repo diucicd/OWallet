@@ -77,10 +77,10 @@ jobs:
         #     echo "| $(basename "$file") | \`$(sha256sum "$file" | cut -d " " -f1)\` |" >> CHECKSUMS.md
         #   done
         # ' sh {} +
-        echo "| $(ls dist_electron/OWallet-*.deb) | \`$(sha256sum dist_electron/OWallet-*.deb | cut -d " " -f1)\` |" >> CHECKSUMS.md
-        echo "| $(ls dist_electron/OWallet-*.exe) | \`$(sha256sum dist_electron/OWallet-*.exe | cut -d " " -f1)\` |" >> CHECKSUMS.md
-        echo "| $(ls dist_electron/OWallet-*.AppImage) | \`$(sha256sum dist_electron/OWallet-*.AppImage | cut -d " " -f1)\` |" >> CHECKSUMS.md
-        echo "| $(ls dist_electron/OWallet-*.dmg) | \`$(sha256sum dist_electron/OWallet-*.dmg | cut -d " " -f1)\` |" >> CHECKSUMS.md
+        echo "| $(ls dist_electron/OWallet-*.deb | sed -e 's#dist_electron/##') | \`$(sha256sum dist_electron/OWallet-*.deb | cut -d " " -f1)\` |" >> CHECKSUMS.md
+        echo "| $(ls dist_electron/OWallet-*.exe | sed -e 's#dist_electron/##') | \`$(sha256sum dist_electron/OWallet-*.exe | cut -d " " -f1)\` |" >> CHECKSUMS.md
+        echo "| $(ls dist_electron/OWallet-*.AppImage | sed -e 's#dist_electron/##') | \`$(sha256sum dist_electron/OWallet-*.AppImage | cut -d " " -f1)\` |" >> CHECKSUMS.md
+        echo "| $(ls dist_electron/OWallet-*.dmg | sed -e 's#dist_electron/##') | \`$(sha256sum dist_electron/OWallet-*.dmg | cut -d " " -f1)\` |" >> CHECKSUMS.md
 
 
 
