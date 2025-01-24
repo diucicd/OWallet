@@ -72,7 +72,7 @@ jobs:
         echo "## SHA256 Checksums" >> CHECKSUMS.md
         echo "| File | SHA256 Checksum |" >> CHECKSUMS.md
         echo "|------|----------------|" >> CHECKSUMS.md
-        find dist_electron -type f -name \*.AppImage -o -name \*.dmg -o -name \*.exe -exec sh -c '
+        find dist_electron/ -type f -name OWallet\*.AppImage -o -name OWallet\*.dmg -o -name OWallet\*.exe -o -name OWallet\*.deb '
           for file; do
             echo "| $(basename "$file") | \`$(sha256sum "$file" | cut -d " " -f1)\` |" >> CHECKSUMS.md
           done
