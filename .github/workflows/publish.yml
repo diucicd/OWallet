@@ -60,7 +60,7 @@ jobs:
 
         # 6. Set the partition list to ensure automated tools can access the key
         #    This is crucial for CI environments.
-        #CERT_ID='Developer ID Application: Ontology Foundation Ltd (29B4VVVVKM)' # <-- Replace with your exact Identity name
+        CERT_ID='Developer ID Application: Ontology Foundation Ltd (29B4VVVVKM)' # <-- Replace with your exact Identity name
 
         #security set-key-partition-list -S apple-tool: -S apple: -k $KEYCHAIN_NAME -p ${{ secrets.KEYCHAIN_PASSWORD }} $KEYCHAIN_NAME
 
@@ -73,6 +73,12 @@ jobs:
 
         # Set lock timeout to the maximum (3600 seconds) and ensure it's always searched
         security set-keychain-settings -l -u -t 3600 $KEYCHAIN_NAME
+        if security find-identity -p codesigning $KEYCHAIN_NAME | grep -q "$CERT_ID"; then
+        echo "✅ SUCCESS: Code Signing Identity '$CERT_ID' found in the temporary keychain."
+        else
+        echo "❌ FAILURE: Code Signing Identity '$CERT_ID' NOT found. Codesign will likely fail."
+        exit 1 # Exit the job immediately if the identity isn't found
+        fi
 
 
 
