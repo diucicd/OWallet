@@ -51,13 +51,13 @@ jobs:
 
         # 3. Increase the keychain search timeout
         security set-keychain-settings -t 3600 $KEYCHAIN_NAME
-        echo "here ok"
 
         # 4. Decode the P12 file content from the secret and save it to a file
         echo "${{ secrets.DEV_ID_CERTIFICATE_P12 }}" | base64 --decode > dev_cert.p12
 
         # 5. Import the certificate and private key into the new keychain
         security import dev_cert.p12 -k $KEYCHAIN_NAME -P "${{ secrets.P12_PASSWORD }}" -T /usr/bin/codesign -T /usr/bin/security
+        echo "here ok"
 
         # 6. Set the partition list to ensure automated tools can access the key
         #    This is crucial for CI environments.
