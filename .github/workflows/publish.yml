@@ -89,6 +89,15 @@ jobs:
     #     draft: false
     #     prerelease: false
 
+
+    # --- Cleanup ---
+    - name: 🗑️ Clean Up Keychain and Files
+      if: always() # Ensure cleanup runs even on failure
+      run: |
+        security delete-keychain temp.keychain
+        rm dev_cert.p12
+
+
     - name: Generate Checksums
       run: |
         brew install coreutils
