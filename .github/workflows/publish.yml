@@ -90,7 +90,6 @@ jobs:
         exit 1 # Exit the job immediately if the identity isn't found
         fi
 
-        security set-identity-preference -s "$CERT_ID" -k $KEYCHAIN_NAME
 
 
 
