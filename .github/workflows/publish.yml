@@ -41,8 +41,8 @@ jobs:
     - name: 🔐 Setup Temporary Keychain and Import Certificate
       run: |
         KEYCHAIN_NAME="temp.keychain"
-        which node
-        echo $NODE_PATH
+        NODE_PATH=$(which node)
+        echo "Found Node executable at: $NODE_PATH"
 
         # 1. Create a new temporary keychain
         security create-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} $KEYCHAIN_NAME
@@ -58,7 +58,7 @@ jobs:
         echo "${{ secrets.DEV_ID_CERTIFICATE_P12 }}" | base64 --decode > dev_cert.p12
 
         # 5. Import the certificate and private key into the new keychain
-        security import dev_cert.p12 -k $KEYCHAIN_NAME -P "${{ secrets.P12_PASSWORD }}" -T /usr/bin/codesign -T /usr/bin/security -T /usr/bin/xcodebuild -T /Users/runner/hostedtoolcache/node/16.20.1/arm64/bin/node
+        security import dev_cert.p12 -k $KEYCHAIN_NAME -P "${{ secrets.P12_PASSWORD }}" -T /usr/bin/codesign -T /usr/bin/security -T /usr/bin/xcodebuild -T $NODE_PATH
 
         # 6. Set the partition list to ensure automated tools can access the key
         #    This is crucial for CI environments.
@@ -81,6 +81,9 @@ jobs:
         echo "❌ FAILURE: Code Signing Identity '$CERT_ID' NOT found. Codesign will likely fail."
         exit 1 # Exit the job immediately if the identity isn't found
         fi
+
+        security set-identity-preference -s "$CERT_ID" -k $KEYCHAIN_NAME
+        security set-key-partition-list -A -k $KEYCHAIN_NAME
 
 
 
