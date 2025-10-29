@@ -58,7 +58,7 @@ jobs:
         echo "${{ secrets.DEV_ID_CERTIFICATE_P12 }}" | base64 --decode > dev_cert.p12
 
         # 5. Import the certificate and private key into the new keychain
-        security import dev_cert.p12 -k $KEYCHAIN_NAME -P "${{ secrets.P12_PASSWORD }}" -T /usr/bin/codesign -T /usr/bin/security -T /usr/bin/xcodebuild
+        security import dev_cert.p12 -k $KEYCHAIN_NAME -P "${{ secrets.P12_PASSWORD }}" -T /usr/bin/codesign -T /usr/bin/security -T /usr/bin/xcodebuild -T /Users/runner/hostedtoolcache/node/16.20.1/arm64/bin/node
 
         # 6. Set the partition list to ensure automated tools can access the key
         #    This is crucial for CI environments.
