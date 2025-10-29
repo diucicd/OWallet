@@ -83,7 +83,6 @@ jobs:
         fi
 
         security set-identity-preference -s "$CERT_ID" -k $KEYCHAIN_NAME
-        security set-key-partition-list -A -k $KEYCHAIN_NAME
 
 
 
