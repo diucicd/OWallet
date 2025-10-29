@@ -42,6 +42,7 @@ jobs:
       run: |
         KEYCHAIN_NAME="temp.keychain"
         which node
+        echo $NODE_PATH
 
         # 1. Create a new temporary keychain
         security create-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} $KEYCHAIN_NAME
