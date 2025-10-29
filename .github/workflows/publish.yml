@@ -65,6 +65,17 @@ jobs:
         #security set-key-partition-list -S apple-tool: -S apple: -k $KEYCHAIN_NAME -p ${{ secrets.KEYCHAIN_PASSWORD }} $KEYCHAIN_NAME
 
 
+        # Set the temporary keychain as the default for the session
+        security default-keychain -s $KEYCHAIN_NAME
+
+        # Unlock the keychain
+        security unlock-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} $KEYCHAIN_NAME
+
+        # Set lock timeout to the maximum (3600 seconds) and ensure it's always searched
+        security set-keychain-settings -l -u -t 3600 $KEYCHAIN_NAME
+
+
+
     # Install dependencies
     - name: Install dependencies
       run: |
