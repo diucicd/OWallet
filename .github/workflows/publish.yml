@@ -1,9 +1,18 @@
 name: Release on Tag
 
+# on:
+#   push:
+#     tags:
+#       - '*' # Listen for any tag push events
+#
+#     #
+#     #
 on:
   push:
-    tags:
-      - '*' # Listen for any tag push events
+    branches:
+      # This specifies that the workflow should only run
+      # when a push occurs on the 'master' branch.
+      - master
 
 jobs:
   build-and-release:
