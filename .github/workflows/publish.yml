@@ -51,6 +51,7 @@ jobs:
 
         # 3. Increase the keychain search timeout
         security set-keychain-settings -t 3600 $KEYCHAIN_NAME
+        echo "here ok"
 
         # 4. Decode the P12 file content from the secret and save it to a file
         echo "${{ secrets.DEV_ID_CERTIFICATE_P12 }}" | base64 --decode > dev_cert.p12
@@ -61,6 +62,7 @@ jobs:
         # 6. Set the partition list to ensure automated tools can access the key
         #    This is crucial for CI environments.
         CERT_ID='Developer ID Application: Ontology Foundation Ltd (29B4VVVVKM)' # <-- Replace with your exact Identity name
+
         security set-key-partition-list -S apple-tool: -S apple: -k $KEYCHAIN_NAME -p ${{ secrets.KEYCHAIN_PASSWORD }}
 
 
